@@ -3,6 +3,10 @@
 cmake_minimum_required(VERSION 3.16)
 
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+
+set(EXTRA_COMPONENT_DIRS
+    ./components/bsp_extra
+)
 set(COMPONENTS main)
 
 project(i2s-es8311-example)

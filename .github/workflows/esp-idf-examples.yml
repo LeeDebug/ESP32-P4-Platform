@@ -78,13 +78,17 @@ jobs:
           fi
 
   build:
-    name: Build ${{ matrix.example }}
+    name: Build ${{ matrix.example }} (${{ matrix.idf_version }})
     needs: discover
     if: needs.discover.outputs.has_examples == 'true'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson(needs.discover.outputs.matrix) }}
+      matrix:
+        example: ${{ fromJson(needs.discover.outputs.matrix).example }}
+        idf_version:
+          - v5.5.4
+          - v6.0.1
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -92,6 +96,6 @@ jobs:
       - name: Build with ESP-IDF
         uses: espressif/esp-idf-ci-action@v1
         with:
-          esp_idf_version: v5.5.4
+          esp_idf_version: ${{ matrix.idf_version }}
           target: esp32p4
           path: ${{ matrix.example }}

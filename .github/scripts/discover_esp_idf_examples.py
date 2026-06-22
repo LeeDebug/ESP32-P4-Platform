@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import fnmatch
 import json
 import os
 import subprocess
@@ -12,6 +13,11 @@ from pathlib import Path
 
 
 EXAMPLES_ROOT = Path("examples/esp-idf")
+GLOBAL_EXAMPLE_PATTERNS = (
+    ".github/workflows/esp-idf-examples.yml",
+    ".github/scripts/discover_esp_idf_examples.py",
+    "config/esp32p4_rev_*.defaults",
+)
 
 
 def run_git(args: list[str]) -> list[str]:
@@ -52,6 +58,10 @@ def discover_from_paths(paths: list[str], known_examples: set[str]) -> list[str]
 
     for changed_path in paths:
         changed_path = changed_path.strip().strip("/")
+        if any(fnmatch.fnmatch(changed_path, pattern) for pattern in GLOBAL_EXAMPLE_PATTERNS):
+            selected.update(known_examples)
+            continue
+
         if not changed_path.startswith(root_prefix):
             continue
 

@@ -58,6 +58,7 @@ menu "Example Configuration"
 
     config EXAMPLE_BSP
         bool "Enable Board Support Package (BSP) support"
+        default y if IDF_TARGET_ESP32P4
         default n
         help
             Use BSP to setup all hardware settings. Specific board must be selected in main/idf_component.yml file.
