@@ -28,7 +28,8 @@
 
 当前工作流使用以下构建环境：
 
-- ESP-IDF Docker image：`espressif/idf:v5.5.4`
+- ESP-IDF Docker image `espressif/idf:v5.5.4`：构建所有发现的示例。
+- ESP-IDF Docker image `espressif/idf:v6.0.1`：构建所有发现的示例。
 - Target：`esp32p4`
 
 Arduino 示例目前有意暂不由该工作流构建。

@@ -25,7 +25,6 @@
 
 - `components/brookesia_core`
 - `components/brookesia_app_squareline_demo`
-- `components/esp32_p4_platform`
 - 组件清单中的 `waveshare/esp32_p4_platform`
 
 ### 配置

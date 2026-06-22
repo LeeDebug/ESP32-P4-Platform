@@ -32,7 +32,8 @@ Manual runs accept one input:
 
 The workflow currently builds with:
 
-- ESP-IDF Docker image: `espressif/idf:v5.5.4`
+- ESP-IDF Docker image `espressif/idf:v5.5.4` for all discovered examples.
+- ESP-IDF Docker image `espressif/idf:v6.0.1` for all discovered examples.
 - Target: `esp32p4`
 
 Arduino examples are intentionally not built by this workflow yet.

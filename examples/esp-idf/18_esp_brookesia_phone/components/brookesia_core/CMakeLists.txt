@@ -124,12 +124,19 @@ if(CONFIG_ESP_BROOKESIA_ENABLE_SYSTEMS)
 endif()
 
 #
+set(requires esp_netif esp_wifi nvs_flash)
+if(DEFINED IDF_VERSION_MAJOR AND IDF_VERSION_MAJOR GREATER_EQUAL 6)
+    list(APPEND requires cjson)
+else()
+    list(APPEND requires json)
+endif()
 # Register Component
 #
 idf_component_register(
     SRCS ${SRCS_C} ${SRCS_CPP}
     INCLUDE_DIRS ${INCLUDE_DIRS}
-    REQUIRES json esp_netif esp_wifi nvs_flash
+    REQUIRES ${requires}
+    PRIV_REQUIRES esp_driver_i2c esp_driver_i2s
 )
 include(package_manager)
 cu_pkg_define_version(${CMAKE_CURRENT_LIST_DIR})

@@ -30,7 +30,6 @@ No separate `esp-brookesia` clone is required for this repository example. The a
 
 - `components/brookesia_core`
 - `components/brookesia_app_squareline_demo`
-- `components/esp32_p4_platform`
 - `waveshare/esp32_p4_platform` from the component manifest
 
 ### Configuration

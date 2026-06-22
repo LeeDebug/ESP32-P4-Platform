@@ -1,9 +1,20 @@
 ## IDF Component Manager Manifest File
 dependencies:
-  idf: "^5.0"
-  espressif/es8311: "^1.0.0"
+  idf:
+    version: ">=5.0"
 
-# After enabling Board Support Packages support in menuconfig, you can pick you specific BSP here
+  espressif/es8311:
+    version: "^1.0.0"
+    rules:
+      - if: "target in [esp32, esp32s2, esp32s3, esp32h2]"
+
+  waveshare/esp32_p4_platform:
+    version: "*"
+    rules:
+      - if: "target in [esp32p4]"
+
+# After enabling Board Support Packages support in menuconfig, you can pick your specific BSP here.
+# ESP32-P4 uses waveshare/esp32_p4_platform together with the local bsp_extra component.
   espressif/esp-box:
     version: "^2.4.2"
     rules:
