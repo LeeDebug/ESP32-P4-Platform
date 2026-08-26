@@ -18,23 +18,9 @@ using namespace std;
 using namespace esp_brookesia::gui;
 using namespace esp_brookesia::systems;
 
-namespace {
-
-static lv_obj_t *create_center_label(lv_obj_t *parent, const char *text)
-{
-    lv_obj_t *label = lv_label_create(parent);
-    lv_label_set_text(label, text);
-    lv_obj_set_style_text_align(label, LV_TEXT_ALIGN_CENTER, 0);
-    lv_obj_set_width(label, LV_PCT(100));
-    lv_obj_center(label);
-    return label;
-}
-
-} // namespace
+LV_IMG_DECLARE(esp_brookesia_app_icon_launcher_voice_assistant_112_112);
 
 namespace esp_brookesia::apps {
-
-LV_IMG_DECLARE(esp_brookesia_image_middle_app_launcher_default_112_112);
 
 VoiceAssistant *VoiceAssistant::_instance = nullptr;
 
@@ -47,7 +33,7 @@ VoiceAssistant *VoiceAssistant::requestInstance(bool use_status_bar, bool use_na
 }
 
 VoiceAssistant::VoiceAssistant(bool use_status_bar, bool use_navigation_bar):
-    App(APP_NAME, &esp_brookesia_image_middle_app_launcher_default_112_112, false, use_status_bar, use_navigation_bar)
+    App(APP_NAME, &esp_brookesia_app_icon_launcher_voice_assistant_112_112, false, use_status_bar, use_navigation_bar)
 {
 }
 
@@ -95,9 +81,9 @@ bool VoiceAssistant::run(void)
     lv_obj_set_style_shadow_opa(mic, LV_OPA_30, 0);
 
     lv_obj_t *mic_label = lv_label_create(mic);
-    lv_label_set_text(mic_label, LV_SYMBOL_MICROPHONE);
+    lv_label_set_text(mic_label, LV_SYMBOL_AUDIO);
     lv_obj_set_style_text_color(mic_label, lv_color_hex(0xFFFFFF), 0);
-    lv_obj_set_style_text_font(mic_label, &lv_font_montserrat_48, 0);
+    lv_obj_set_style_text_font(mic_label, &lv_font_montserrat_44, 0);
     lv_obj_center(mic_label);
 
     lv_obj_t *hint = lv_label_create(panel);

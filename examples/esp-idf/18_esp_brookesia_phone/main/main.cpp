@@ -11,6 +11,7 @@
 #undef ESP_UTILS_LOG_TAG
 #endif
 #define ESP_UTILS_LOG_TAG "Main"
+#include "esp_heap_caps.h"
 #include "esp_lib_utils.h"
 
 using namespace esp_brookesia;
@@ -65,6 +66,11 @@ If you need to use the three-cache anti-tear configuration, you need to fix idf 
         stylesheet = new (std::nothrow) Stylesheet(STYLESHEET_800_1280_DARK);
         ESP_UTILS_CHECK_NULL_EXIT(stylesheet, "Create stylesheet failed");
     }
+    else if ((BSP_LCD_H_RES == 720) && (BSP_LCD_V_RES == 1280))
+    {
+        stylesheet = new (std::nothrow) Stylesheet(STYLESHEET_720_1280_DARK);
+        ESP_UTILS_CHECK_NULL_EXIT(stylesheet, "Create stylesheet failed");
+    }
     if (stylesheet)
     {
         ESP_UTILS_LOGI("Using stylesheet (%s)", stylesheet->core.name);
@@ -79,6 +85,7 @@ If you need to use the three-cache anti-tear configuration, you need to fix idf 
 
         /* Begin the phone */
         ESP_UTILS_CHECK_FALSE_EXIT(phone->begin(), "Begin failed");
+        ESP_UTILS_LOGI("Phone started with display %dx%d", BSP_LCD_H_RES, BSP_LCD_V_RES);
         // assert(phone->getDisplay().showContainerBorder() && "Show container border failed");
 
         /* Init and install apps from registry */
@@ -102,6 +109,17 @@ If you need to use the three-cache anti-tear configuration, you need to fix idf 
                 phone->getDisplay().getStatusBar()->setClock(timeinfo.tm_hour, timeinfo.tm_min),
                 "Refresh status bar failed"
             ); }, 1000, phone);
+
+        lv_timer_create([](lv_timer_t *t)
+                        {
+            static uint32_t s_tick = 0;
+            ++s_tick;
+            if ((s_tick % 30) == 0) {
+                ESP_UTILS_LOGI("GUI heartbeat: heap internal free=%u, psram free=%u",
+                               (unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL),
+                               (unsigned)heap_caps_get_free_size(MALLOC_CAP_SPIRAM));
+            }
+        }, 1000, nullptr);
     }
 
     if constexpr (EXAMPLE_SHOW_MEM_INFO)
